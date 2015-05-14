@@ -11,17 +11,16 @@ class Coverit < Formula
   def install
 
     ENV["GOPATH"] = buildpath
-    ENV["PATH"] = buildpath/"bin:#{ENV['PATH']}"
-    # ENV.append_path "PATH", buildpath/"bin"
 
     coverit_build_path = buildpath/"src/github.com/coverit/coverit"
     coverit_build_path.install Dir["{*,.git}"]
+    godeps_workspace_path = "#{coverit_build_path}/Godeps/_workspace"
 
     # coverit's deps is managed by godeps
-    system "go", "get", "github.com/tools/godep"
+    ENV.append_path "GOPATH", godeps_workspace_path
 
     cd "src/github.com/coverit/coverit/cli" do
-      system "godep", "go", "build", "-o", "coverit"
+      system "go", "build", "-o", "coverit"
       bin.install "#{coverit_build_path}/cli/coverit"
     end
   end
