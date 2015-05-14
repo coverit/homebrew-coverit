@@ -4,7 +4,7 @@ class Coverit < Formula
   homepage "https://github.com/coverit/coverit"
   url "https://github.com/coverit/coverit.git"
 
-  version "dev"
+  version "0.0.0"
 
   depends_on 'go' => :build
 
@@ -27,6 +27,6 @@ class Coverit < Formula
   end
 
   test do
-    assert_match "Coverit v#{version}", shell_output("#{bin}/coverit version")
+    assert_match "coverit version #{version}", shell_output("#{bin}/coverit --version")
   end
 end
