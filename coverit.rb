@@ -7,6 +7,7 @@ class Coverit < Formula
   version "0.0.0"
 
   depends_on 'go' => :build
+  depends_on 'lcov'
 
   def install
 
