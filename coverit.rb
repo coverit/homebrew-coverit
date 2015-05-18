@@ -2,9 +2,10 @@ require "formula"
 
 class Coverit < Formula
   homepage "https://github.com/coverit/coverit"
-  url "https://github.com/coverit/coverit.git"
+  url "https://github.com/coverit/coverit.git", :branch => "master"
 
-  version "0.0.0"
+  version `curl -sL "https://raw.githubusercontent.com/coverit/coverit/master/cli/VERSION"`.gsub(/\s+/, " ").strip
+  # version "alpha"
 
   depends_on 'go' => :build
   depends_on 'lcov'
@@ -21,7 +22,11 @@ class Coverit < Formula
     ENV.append_path "GOPATH", godeps_workspace_path
 
     cd "src/github.com/coverit/coverit/cli" do
-      system "go", "build", "-o", "coverit"
+
+      cli_version = `cat VERSION`
+      cli_sha = `git rev-parse --short HEAD`
+
+      system "go", "build", "-o", "coverit", "-ldflags", "-X main.version #{cli_version} -X main.sha #{cli_sha}"
       bin.install "#{coverit_build_path}/cli/coverit"
     end
   end
