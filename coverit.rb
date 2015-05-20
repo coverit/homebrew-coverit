@@ -9,6 +9,7 @@ class Coverit < Formula
 
   depends_on 'go' => :build
   depends_on 'lcov'
+  depends_on 'libgit2'
 
   def install
 
